@@ -1,0 +1,3098 @@
+[
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 128,
+    "height": 66,
+    "sourceXYWH": [
+      0,
+      0,
+      128,
+      66
+    ],
+    "destinationWH": [
+      1195,
+      42
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      82
+    ],
+    "deviceCorners": [
+      0,
+      82,
+      1195,
+      82,
+      1195,
+      124,
+      0,
+      124
+    ],
+    "colors": [
+      "0xbffefefe",
+      "0xbffefefe",
+      "0xbffefefe"
+    ],
+    "mode": "opaque",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 54,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      54,
+      50
+    ],
+    "destinationWH": [
+      34,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      19,
+      87
+    ],
+    "deviceCorners": [
+      19,
+      87,
+      53,
+      87,
+      53,
+      118,
+      19,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0xffffffff",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 56,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      56,
+      50
+    ],
+    "destinationWH": [
+      35,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      52,
+      87
+    ],
+    "deviceCorners": [
+      52,
+      87,
+      87,
+      87,
+      87,
+      118,
+      52,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0xffffffff",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 86,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      10,
+      50
+    ],
+    "destinationWH": [
+      6,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      95,
+      87
+    ],
+    "deviceCorners": [
+      95,
+      87,
+      253,
+      87,
+      253,
+      118,
+      95,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0xffffffff",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 86,
+    "height": 50,
+    "sourceXYWH": [
+      10,
+      0,
+      40,
+      50
+    ],
+    "destinationWH": [
+      129,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      95,
+      87
+    ],
+    "deviceCorners": [
+      95,
+      87,
+      253,
+      87,
+      253,
+      118,
+      95,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0xffffffff",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 86,
+    "height": 50,
+    "sourceXYWH": [
+      50,
+      0,
+      36,
+      50
+    ],
+    "destinationWH": [
+      23,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      95,
+      87
+    ],
+    "deviceCorners": [
+      95,
+      87,
+      253,
+      87,
+      253,
+      118,
+      95,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0xffffffff",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 52,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      52,
+      50
+    ],
+    "destinationWH": [
+      33,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      95,
+      87
+    ],
+    "deviceCorners": [
+      95,
+      87,
+      253,
+      87,
+      253,
+      118,
+      95,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      410,
+      87
+    ],
+    "deviceCorners": [
+      410,
+      87,
+      486,
+      87,
+      486,
+      118,
+      410,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x1a000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      20,
+      0,
+      52,
+      50
+    ],
+    "destinationWH": [
+      50,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      410,
+      87
+    ],
+    "deviceCorners": [
+      423,
+      87,
+      473,
+      87,
+      473,
+      118,
+      423,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x1a000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      72,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      410,
+      87
+    ],
+    "deviceCorners": [
+      410,
+      87,
+      486,
+      87,
+      486,
+      118,
+      410,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x1a000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      487,
+      87
+    ],
+    "deviceCorners": [
+      487,
+      87,
+      569,
+      87,
+      569,
+      118,
+      487,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      20,
+      0,
+      52,
+      50
+    ],
+    "destinationWH": [
+      56,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      487,
+      87
+    ],
+    "deviceCorners": [
+      500,
+      87,
+      556,
+      87,
+      556,
+      118,
+      500,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      72,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      487,
+      87
+    ],
+    "deviceCorners": [
+      487,
+      87,
+      569,
+      87,
+      569,
+      118,
+      487,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      570,
+      87
+    ],
+    "deviceCorners": [
+      570,
+      87,
+      649,
+      87,
+      649,
+      118,
+      570,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      20,
+      0,
+      52,
+      50
+    ],
+    "destinationWH": [
+      53,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      570,
+      87
+    ],
+    "deviceCorners": [
+      583,
+      87,
+      636,
+      87,
+      636,
+      118,
+      583,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      72,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      570,
+      87
+    ],
+    "deviceCorners": [
+      570,
+      87,
+      649,
+      87,
+      649,
+      118,
+      570,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      650,
+      87
+    ],
+    "deviceCorners": [
+      650,
+      87,
+      719,
+      87,
+      719,
+      118,
+      650,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      20,
+      0,
+      52,
+      50
+    ],
+    "destinationWH": [
+      43,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      650,
+      87
+    ],
+    "deviceCorners": [
+      663,
+      87,
+      706,
+      87,
+      706,
+      118,
+      663,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      72,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      650,
+      87
+    ],
+    "deviceCorners": [
+      650,
+      87,
+      719,
+      87,
+      719,
+      118,
+      650,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      720,
+      87
+    ],
+    "deviceCorners": [
+      720,
+      87,
+      785,
+      87,
+      785,
+      118,
+      720,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      20,
+      0,
+      52,
+      50
+    ],
+    "destinationWH": [
+      39,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      720,
+      87
+    ],
+    "deviceCorners": [
+      733,
+      87,
+      772,
+      87,
+      772,
+      118,
+      733,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 92,
+    "height": 50,
+    "sourceXYWH": [
+      72,
+      0,
+      20,
+      50
+    ],
+    "destinationWH": [
+      13,
+      31
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      720,
+      87
+    ],
+    "deviceCorners": [
+      720,
+      87,
+      785,
+      87,
+      785,
+      118,
+      720,
+      118
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "navigation"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 144,
+    "height": 90,
+    "sourceXYWH": [
+      0,
+      0,
+      8,
+      90
+    ],
+    "destinationWH": [
+      5,
+      56
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "deviceCorners": [
+      0,
+      0,
+      1195,
+      0,
+      1195,
+      56,
+      0,
+      56
+    ],
+    "colors": [
+      "0xfffbfbfb",
+      "0xfff6f6f6",
+      "0xffcfcfcf"
+    ],
+    "mode": "opaque",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 144,
+    "height": 90,
+    "sourceXYWH": [
+      8,
+      0,
+      128,
+      90
+    ],
+    "destinationWH": [
+      1185,
+      56
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "deviceCorners": [
+      5,
+      0,
+      1190,
+      0,
+      1190,
+      56,
+      5,
+      56
+    ],
+    "colors": [
+      "0xfffbfbfb",
+      "0xfff6f6f6",
+      "0xffcfcfcf"
+    ],
+    "mode": "opaque",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 144,
+    "height": 90,
+    "sourceXYWH": [
+      136,
+      0,
+      8,
+      90
+    ],
+    "destinationWH": [
+      5,
+      56
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "deviceCorners": [
+      0,
+      0,
+      1195,
+      0,
+      1195,
+      56,
+      0,
+      56
+    ],
+    "colors": [
+      "0xfffbfbfb",
+      "0xfff6f6f6",
+      "0xffcfcfcf"
+    ],
+    "mode": "opaque",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 60,
+    "height": 60,
+    "sourceXYWH": [
+      0,
+      0,
+      60,
+      60
+    ],
+    "destinationWH": [
+      38,
+      38
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      44,
+      9
+    ],
+    "deviceCorners": [
+      44,
+      9,
+      85,
+      9,
+      85,
+      47,
+      44,
+      47
+    ],
+    "colors": [
+      "0x0",
+      "0x80000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 60,
+    "height": 60,
+    "sourceXYWH": [
+      0,
+      0,
+      60,
+      60
+    ],
+    "destinationWH": [
+      38,
+      38
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      93,
+      9
+    ],
+    "deviceCorners": [
+      90,
+      9,
+      134,
+      9,
+      134,
+      47,
+      90,
+      47
+    ],
+    "colors": [
+      "0x0",
+      "0xa6000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 60,
+    "height": 60,
+    "sourceXYWH": [
+      0,
+      0,
+      60,
+      60
+    ],
+    "destinationWH": [
+      38,
+      38
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      142,
+      9
+    ],
+    "deviceCorners": [
+      139,
+      9,
+      180,
+      9,
+      180,
+      47,
+      139,
+      47
+    ],
+    "colors": [
+      "0x0",
+      "0x80000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      44
+    ],
+    "destinationWH": [
+      13,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0x5a939393",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      20,
+      0,
+      86,
+      44
+    ],
+    "destinationWH": [
+      64,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      206,
+      14,
+      270,
+      14,
+      270,
+      42,
+      206,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0x5a939393",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      106,
+      0,
+      20,
+      44
+    ],
+    "destinationWH": [
+      13,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0x5a939393",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      44
+    ],
+    "destinationWH": [
+      13,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0xccaaaaaa",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      20,
+      0,
+      86,
+      44
+    ],
+    "destinationWH": [
+      56,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      206,
+      14,
+      262,
+      14,
+      262,
+      42,
+      206,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0xccaaaaaa",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      106,
+      0,
+      20,
+      44
+    ],
+    "destinationWH": [
+      13,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0xccaaaaaa",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 42,
+    "height": 44,
+    "sourceXYWH": [
+      0,
+      0,
+      42,
+      44
+    ],
+    "destinationWH": [
+      26,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0xfff2f2f2",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 90,
+    "height": 60,
+    "sourceXYWH": [
+      0,
+      0,
+      90,
+      60
+    ],
+    "destinationWH": [
+      56,
+      38
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      293,
+      9
+    ],
+    "deviceCorners": [
+      293,
+      6,
+      349,
+      6,
+      349,
+      50,
+      293,
+      50
+    ],
+    "colors": [
+      "0x0",
+      "0xffe7e7e7",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 36,
+    "height": 32,
+    "sourceXYWH": [
+      0,
+      0,
+      36,
+      32
+    ],
+    "destinationWH": [
+      23,
+      20
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      293,
+      9
+    ],
+    "deviceCorners": [
+      293,
+      6,
+      349,
+      6,
+      349,
+      50,
+      293,
+      50
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 477,
+    "height": 56,
+    "sourceXYWH": [
+      0,
+      0,
+      477,
+      56
+    ],
+    "destinationWH": [
+      477,
+      56
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      359,
+      0
+    ],
+    "deviceCorners": [
+      359,
+      0,
+      836,
+      0,
+      836,
+      56,
+      359,
+      56
+    ],
+    "colors": [
+      "0x1000000",
+      "0x73fefefe",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 52,
+    "height": 64,
+    "sourceXYWH": [
+      0,
+      0,
+      52,
+      64
+    ],
+    "destinationWH": [
+      33,
+      40
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      581,
+      8
+    ],
+    "deviceCorners": [
+      581,
+      8,
+      614,
+      8,
+      614,
+      48,
+      581,
+      48
+    ],
+    "colors": [
+      "0x0",
+      "0x4d000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 90,
+    "height": 60,
+    "sourceXYWH": [
+      0,
+      0,
+      90,
+      60
+    ],
+    "destinationWH": [
+      57,
+      39
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      848,
+      8
+    ],
+    "deviceCorners": [
+      849,
+      8,
+      904,
+      8,
+      904,
+      47,
+      849,
+      47
+    ],
+    "colors": [
+      "0x0",
+      "0xffe7e7e7",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 42,
+    "height": 28,
+    "sourceXYWH": [
+      0,
+      0,
+      42,
+      28
+    ],
+    "destinationWH": [
+      26,
+      18
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      848,
+      8
+    ],
+    "deviceCorners": [
+      849,
+      8,
+      904,
+      8,
+      904,
+      47,
+      849,
+      47
+    ],
+    "colors": [
+      "0x0",
+      "0x80000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 122,
+    "height": 62,
+    "sourceXYWH": [
+      0,
+      0,
+      30,
+      62
+    ],
+    "destinationWH": [
+      19,
+      39
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      919,
+      7
+    ],
+    "deviceCorners": [
+      919,
+      7,
+      1091,
+      7,
+      1091,
+      46,
+      919,
+      46
+    ],
+    "colors": [
+      "0x0",
+      "0xffffffff",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 122,
+    "height": 62,
+    "sourceXYWH": [
+      30,
+      0,
+      62,
+      62
+    ],
+    "destinationWH": [
+      134,
+      39
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      919,
+      7
+    ],
+    "deviceCorners": [
+      919,
+      7,
+      1091,
+      7,
+      1091,
+      46,
+      919,
+      46
+    ],
+    "colors": [
+      "0x0",
+      "0xffffffff",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 122,
+    "height": 62,
+    "sourceXYWH": [
+      92,
+      0,
+      30,
+      62
+    ],
+    "destinationWH": [
+      19,
+      39
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      919,
+      7
+    ],
+    "deviceCorners": [
+      919,
+      7,
+      1091,
+      7,
+      1091,
+      46,
+      919,
+      46
+    ],
+    "colors": [
+      "0x0",
+      "0xffffffff",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 38,
+    "height": 28,
+    "sourceXYWH": [
+      0,
+      0,
+      38,
+      28
+    ],
+    "destinationWH": [
+      24,
+      18
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      930,
+      19
+    ],
+    "deviceCorners": [
+      927,
+      16,
+      957,
+      16,
+      957,
+      40,
+      927,
+      40
+    ],
+    "colors": [
+      "0x0",
+      "0x56b7b7b7",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 50,
+    "height": 36,
+    "sourceXYWH": [
+      0,
+      0,
+      50,
+      36
+    ],
+    "destinationWH": [
+      31,
+      23
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      1158,
+      0
+    ],
+    "deviceCorners": [
+      1158,
+      0,
+      1189,
+      0,
+      1189,
+      23,
+      1158,
+      23
+    ],
+    "colors": [
+      "0x0",
+      "0x38000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 50,
+    "height": 36,
+    "sourceXYWH": [
+      0,
+      0,
+      50,
+      36
+    ],
+    "destinationWH": [
+      31,
+      23
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      1096,
+      0
+    ],
+    "deviceCorners": [
+      1096,
+      0,
+      1127,
+      0,
+      1127,
+      23,
+      1096,
+      23
+    ],
+    "colors": [
+      "0x0",
+      "0x35000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 50,
+    "height": 36,
+    "sourceXYWH": [
+      0,
+      0,
+      50,
+      36
+    ],
+    "destinationWH": [
+      31,
+      23
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      1127,
+      0
+    ],
+    "deviceCorners": [
+      1127,
+      0,
+      1158,
+      0,
+      1158,
+      23,
+      1127,
+      23
+    ],
+    "colors": [
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      0,
+      0,
+      4,
+      46
+    ],
+    "destinationWH": [
+      3,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      250,
+      124,
+      1195,
+      124,
+      1195,
+      795,
+      250,
+      795
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      11,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      252,
+      124,
+      263,
+      124,
+      263,
+      153,
+      252,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      48,
+      0,
+      32,
+      46
+    ],
+    "destinationWH": [
+      20,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      250,
+      124,
+      1195,
+      124,
+      1195,
+      795,
+      250,
+      795
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      228,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      285,
+      124,
+      513,
+      124,
+      513,
+      153,
+      285,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      51,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      535,
+      124,
+      586,
+      124,
+      586,
+      153,
+      535,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      134,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      764,
+      124,
+      898,
+      124,
+      898,
+      153,
+      764,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      78,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      920,
+      124,
+      998,
+      124,
+      998,
+      153,
+      920,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      12,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      1020,
+      124,
+      1032,
+      124,
+      1032,
+      153,
+      1020,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      34,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      1054,
+      124,
+      1088,
+      124,
+      1088,
+      153,
+      1054,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      66,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      1110,
+      124,
+      1176,
+      124,
+      1176,
+      153,
+      1110,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 80,
+    "height": 46,
+    "sourceXYWH": [
+      4,
+      0,
+      44,
+      46
+    ],
+    "destinationWH": [
+      134,
+      29
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      250,
+      124
+    ],
+    "deviceCorners": [
+      608,
+      124,
+      742,
+      124,
+      742,
+      153,
+      608,
+      153
+    ],
+    "colors": [
+      "0xffffffff",
+      "0xffffffff",
+      "0xffe6e6e6"
+    ],
+    "mode": "opaque",
+    "region": "header"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 144,
+    "height": 90,
+    "sourceXYWH": [
+      0,
+      0,
+      8,
+      90
+    ],
+    "destinationWH": [
+      5,
+      56
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "deviceCorners": [
+      0,
+      0,
+      1195,
+      0,
+      1195,
+      56,
+      0,
+      56
+    ],
+    "colors": [
+      "0xfff4f4f4",
+      "0xffdadbdb",
+      "0xffaeaeae"
+    ],
+    "mode": "opaque",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 144,
+    "height": 90,
+    "sourceXYWH": [
+      8,
+      0,
+      128,
+      90
+    ],
+    "destinationWH": [
+      1185,
+      56
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "deviceCorners": [
+      5,
+      0,
+      1190,
+      0,
+      1190,
+      56,
+      5,
+      56
+    ],
+    "colors": [
+      "0xfff4f4f4",
+      "0xffdadbdb",
+      "0xffaeaeae"
+    ],
+    "mode": "opaque",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 144,
+    "height": 90,
+    "sourceXYWH": [
+      136,
+      0,
+      8,
+      90
+    ],
+    "destinationWH": [
+      5,
+      56
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "deviceCorners": [
+      0,
+      0,
+      1195,
+      0,
+      1195,
+      56,
+      0,
+      56
+    ],
+    "colors": [
+      "0xfff4f4f4",
+      "0xffdadbdb",
+      "0xffaeaeae"
+    ],
+    "mode": "opaque",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      44
+    ],
+    "destinationWH": [
+      13,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0x80939393",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      20,
+      0,
+      86,
+      44
+    ],
+    "destinationWH": [
+      64,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      206,
+      14,
+      270,
+      14,
+      270,
+      42,
+      206,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0x80939393",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      106,
+      0,
+      20,
+      44
+    ],
+    "destinationWH": [
+      13,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0x80939393",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      0,
+      0,
+      20,
+      44
+    ],
+    "destinationWH": [
+      13,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0xff707070",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb39084"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      20,
+      0,
+      86,
+      44
+    ],
+    "destinationWH": [
+      56,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      206,
+      14,
+      262,
+      14,
+      262,
+      42,
+      206,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0xff707070",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 126,
+    "height": 44,
+    "sourceXYWH": [
+      106,
+      0,
+      20,
+      44
+    ],
+    "destinationWH": [
+      13,
+      28
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      193,
+      14
+    ],
+    "deviceCorners": [
+      193,
+      14,
+      283,
+      14,
+      283,
+      42,
+      193,
+      42
+    ],
+    "colors": [
+      "0x0",
+      "0xff707070",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 52,
+    "height": 64,
+    "sourceXYWH": [
+      0,
+      0,
+      52,
+      64
+    ],
+    "destinationWH": [
+      33,
+      40
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      581,
+      8
+    ],
+    "deviceCorners": [
+      581,
+      8,
+      614,
+      8,
+      614,
+      48,
+      581,
+      48
+    ],
+    "colors": [
+      "0x0",
+      "0x99000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 38,
+    "height": 28,
+    "sourceXYWH": [
+      0,
+      0,
+      38,
+      28
+    ],
+    "destinationWH": [
+      24,
+      18
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      930,
+      19
+    ],
+    "deviceCorners": [
+      927,
+      16,
+      957,
+      16,
+      957,
+      40,
+      927,
+      40
+    ],
+    "colors": [
+      "0x0",
+      "0x56646464",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 50,
+    "height": 36,
+    "sourceXYWH": [
+      0,
+      0,
+      50,
+      36
+    ],
+    "destinationWH": [
+      31,
+      23
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      1158,
+      0
+    ],
+    "deviceCorners": [
+      1158,
+      0,
+      1189,
+      0,
+      1189,
+      23,
+      1158,
+      23
+    ],
+    "colors": [
+      "0x0",
+      "0x94000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  },
+  {
+    "caller": {
+      "module": "iTunes.exe",
+      "rva": "0xb391ba"
+    },
+    "width": 50,
+    "height": 36,
+    "sourceXYWH": [
+      0,
+      0,
+      50,
+      36
+    ],
+    "destinationWH": [
+      31,
+      23
+    ],
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      1096,
+      0
+    ],
+    "deviceCorners": [
+      1096,
+      0,
+      1127,
+      0,
+      1127,
+      23,
+      1096,
+      23
+    ],
+    "colors": [
+      "0x0",
+      "0x99000000",
+      "0x0"
+    ],
+    "mode": "invert",
+    "region": "title"
+  }
+]

@@ -1,0 +1,29 @@
+'use strict';
+const gd=Process.getModuleByName('gdiplus.dll'),exe=Process.getModuleByName('iTunes.exe');
+const nf=(n,a)=>new NativeFunction(gd.getExportByName(n),'int',a,{traps:'none'});
+const clip=nf('GdipGetClipBounds',['pointer','pointer']),cm=nf('GdipCreateMatrix',['pointer']),dm=nf('GdipDeleteMatrix',['pointer']),world=nf('GdipGetWorldTransform',['pointer','pointer']),elements=nf('GdipGetMatrixElements',['pointer','pointer']),points=nf('GdipTransformPoints',['pointer','int','int','pointer','int']);
+const imageType=nf('GdipGetImageType',['pointer','pointer']),imageWidth=nf('GdipGetImageWidth',['pointer','pointer']),imageHeight=nf('GdipGetImageHeight',['pointer','pointer']),pixel=nf('GdipBitmapGetPixel',['pointer','int','int','pointer']);
+const createAttr=nf('GdipCreateImageAttributes',['pointer']),cloneAttr=nf('GdipCloneImageAttributes',['pointer','pointer']),disposeAttr=nf('GdipDisposeImageAttributes',['pointer']),setMatrix=nf('GdipSetImageAttributesColorMatrix',['pointer','int','bool','pointer','pointer','int']); const colorMatrix=Memory.alloc(100); for(let i=0;i<25;i++)colorMatrix.add(i*4).writeFloat(0); [23/255,23/255,23/255,1,1].forEach((v,i)=>colorMatrix.add((20+i)*4).writeFloat(v)); let substitutions=0,created=0,disposed=0; let armed=false,stopping=false,removed=false,active=0,callbacks=0,phase=null,events=[],errors=[],count=0,dropped=0,owned=0,timer=null;
+const floats=(p,n)=>Array.from({length:n},(_,i)=>p.add(i*4).readFloat());
+function check(v){if(v!==0)throw Error('GDI+ status '+v);}
+function stopCapture(){armed=false;if(timer!==null){clearTimeout(timer);timer=null;}}
+function loc(p){const m=Process.findModuleByAddress(p);return {module:m?m.name:null,rva:m?p.sub(m.base).toString():null};}
+const hook=Interceptor.attach(gd.getExportByName('GdipDrawImageRectRect'),{
+onEnter(a){callbacks++;this.tracked=false;try{
+ if(stopping)return;active++;this.tracked=true;if(!armed||!this.returnAddress.equals(exe.base.add(0xb39084)))return;
+ count++;if(events.length>=160){dropped++;return;}
+ const b=Memory.alloc(32),o=Memory.alloc(Process.pointerSize);check(clip(a[0],b));const clipXYWH=floats(b,4);
+ const corners=Memory.alloc(32);const [x,y,w,h]=clipXYWH;[x,y,x+w,y,x+w,y+h,x,y+h].forEach((v,i)=>corners.add(i*4).writeFloat(v));check(points(a[0],2,0,corners,4));
+ const deviceCorners=floats(corners,8);if(Math.min(deviceCorners[1],deviceCorners[3],deviceCorners[5],deviceCorners[7])>=154)return;
+ check(cm(o));const matrix=o.readPointer();owned++;let transform;
+ try{check(world(a[0],matrix));check(elements(matrix,b));transform=floats(b,6);}finally{check(dm(matrix));owned--;}
+ check(imageType(a[1],b));const type=b.readU32();check(imageWidth(a[1],b));const width=b.readU32();check(imageHeight(a[1],b));const height=b.readU32();
+ const sourceXYWH=[0x38,0x40,0x48,0x50].map(off=>this.context.rsp.add(off).readFloat());
+ const samples=[];if(type===1&&width&&height){for(const [sx,sy] of [[0,0],[Math.floor(width/2),Math.floor(height/2)],[width-1,height-1]]){const status=pixel(a[1],sx,sy,b);samples.push({xy:[sx,sy],status,argb:status===0?'0x'+b.readU32().toString(16):null});}}
+ this.event={phase,sequence:events.length,caller:loc(this.returnAddress),graphics:a[0].toString(),image:a[1].toString(),clipXYWH,deviceCorners,transform,destinationWH:[0x28,0x30].map(off=>this.context.rsp.add(off).readFloat()),destinationXY:null,sourceXYWH,sourceUnit:this.context.rsp.add(0x58).readU32(),imageType:type,width,height,samples};
+ events.push(this.event); const e=this.event; const eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b); const colors=e.samples.map(s=>s.argb); const nav=e.width===128&&e.height===66&&eq(e.transform,[1,0,0,1,0,82])&&eq(e.deviceCorners,[0,82,1195,82,1195,124,0,124])&&eq(e.destinationWH,[1195,42])&&eq(e.sourceXYWH,[0,0,128,66])&&colors.every(c=>c==='0xbffefefe'); const title=e.width===144&&e.height===90&&eq(e.transform,[1,0,0,1,0,0])&&eq(e.deviceCorners,[5,0,1190,0,1190,56,5,56])&&eq(e.destinationWH,[1185,56])&&eq(e.sourceXYWH,[8,0,128,90])&&eq(colors,['0xfffbfbfb','0xfff6f6f6','0xffcfcfcf']); const header=e.width===80&&e.height===46&&eq(e.transform,[1,0,0,1,250,124])&&eq(e.sourceXYWH,[4,0,44,46])&&eq(colors,['0xffffffff','0xffffffff','0xffe6e6e6'])&&e.deviceCorners[0]>=250&&e.deviceCorners[2]<=1195&&e.deviceCorners[1]===124&&e.deviceCorners[5]===153&&e.destinationWH[1]===29&&e.destinationWH[0]===e.deviceCorners[2]-e.deviceCorners[0]; e.region=nav?'navigation':title?'title':header?'header':null; if(e.region&&e.sourceUnit===2&&e.samples.every(s=>s.status===0)){ const out=Memory.alloc(Process.pointerSize); check(a[11].isNull()?createAttr(out):cloneAttr(a[11],out)); this.attribute=out.readPointer(); owned++;created++;check(setMatrix(this.attribute,1,1,colorMatrix,ptr(0),0)); a[11]=this.attribute; substitutions++; e.substituted=true; }
+}catch(e){if(errors.length<8)errors.push(String(e));stopCapture();}finally{callbacks--;}},
+onLeave(r){callbacks++;try{if(this.event)this.event.returnStatus=r.toInt32();if(this.attribute){const rc=disposeAttr(this.attribute);if(rc===0){owned--;disposed++;}else errors.push('Attribute dispose status '+rc);}if(this.tracked)active--;}finally{callbacks--;}}
+});
+function status(){return {active,callbacks,owned,stopping,removed,substitutions,created,disposed};}
+rpc.exports={mark(p){if(active||callbacks)throw Error('not quiescent');stopCapture();phase=p;events=[];errors=[];count=0;dropped=0;armed=true;timer=setTimeout(stopCapture,1500);return status();},report(){stopCapture();return {phase,count,events,errors,dropped,cap:160,destinationQualification:'X/Y held in XMM registers were not decoded; clip bounds are not destination bounds.'};},beginstop(){stopping=true;stopCapture();return status();},remove(){if(stopping&&!active&&!callbacks&&!owned&&!removed){hook.detach();Interceptor.flush();removed=true;}return status();},status};

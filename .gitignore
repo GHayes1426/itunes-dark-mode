@@ -1,0 +1,63 @@
+# Disposable libraries and all iTunes databases/media
+TestLibrary/
+**/TestLibrary/
+*.itl
+*.itdb
+*.xml
+*.m4a
+*.m4p
+*.mp3
+*.aac
+*.wav
+*.flac
+*.alac
+*.mp4
+*.mov
+
+# Local diagnostic runtimes and Python output
+diagnostics-venv/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Native binaries, installers, symbols, and dumps
+*.exe
+*.dll
+*.pdb
+*.dmp
+*.dump
+*.mdmp
+*.crash
+
+# Raw traces and transient runtime state
+*.jsonl
+STOP-OPTIN-THEME
+*STOP*
+*marker*.txt
+*-current.json
+reliability-current.json
+*.tmp
+*.temp
+*.bak
+*.log
+
+# Credentials and tokens
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+*credential*
+*credentials*
+*secret*
+*token*
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
