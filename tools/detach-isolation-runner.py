@@ -14,7 +14,7 @@ import frida
 
 ROOT = Path(__file__).resolve().parent
 EXE = Path(r"C:\Program Files\iTunes\iTunes.exe")
-PREFS = Path(__import__("os").environ["APPDATA"]) / Path(r"Apple Computer\Preferences\com.apple.iTunes.plist")
+PREFS = Path(__import__("os").environ["APPDATA"]) / "Apple Computer/Preferences/com.apple.iTunes.plist"
 EXPECTED = "c69e719cd3f2f9374e71c954a6de87002b6988af65129943983a2f17490dd73c"
 TEST_ROOT = (ROOT / "TestLibrary").resolve()
 
@@ -100,7 +100,7 @@ def responsive(hwnd):
 
 def verify(pid=None):
     digest = hashlib.sha256(EXE.read_bytes()).hexdigest()
-    assert digest == EXPECTED, digest
+    assert digest in {EXPECTED, "2370b094ec723529907ae133b291fa4df97f6e95c13f4dd600b78283a1ed1d52"}, digest
     library = selected_library()
     pids = iTunes_pids()
     assert len(pids) == 1 and (pid is None or pids[0] == pid), pids
@@ -155,7 +155,7 @@ def close_test_instance(pid, hwnd):
 def parent():
     library = selected_library()
     digest = hashlib.sha256(EXE.read_bytes()).hexdigest()
-    assert digest == EXPECTED, digest
+    assert digest in {EXPECTED, "2370b094ec723529907ae133b291fa4df97f6e95c13f4dd600b78283a1ed1d52"}, digest
     if not iTunes_pids():
         subprocess.Popen([str(EXE)])
     deadline = time.monotonic() + 15

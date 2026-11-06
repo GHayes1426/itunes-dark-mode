@@ -3,6 +3,7 @@ import ctypes as C, importlib.util, json, threading, time
 from pathlib import Path
 from types import SimpleNamespace
 import frida
+from build_compat import adapt_source
 
 ROOT=Path(__file__).resolve().parent
 s=importlib.util.spec_from_file_location('bounded',ROOT/'bounded-geometry-runner.py')
@@ -23,7 +24,8 @@ def source(pid,hwnd,address):
              allowed=json.loads((ROOT/'readable-image-allowlist.json').read_text()))
     body=(ROOT/'reliability-agent.js').read_text().replace('__MODE__','combined').replace('__PID__',str(pid)).replace('__HWND__',hex(hwnd)).replace('__TTL__','3600000')
     body=body.replace('send({phase,time:Date.now(),...o});',"if(o.kind==='error')send({kind:'error'});")
-    return (ROOT/'combined-agent.js').read_text().replace('/*BODY*/',body).replace('/*CHROME*/',(ROOT/'readable-chrome-agent.js').read_text()).replace('/*DETAIL*/',(ROOT/'artists-pane-agent.js').read_text()).replace('/*ARTWORK*/',(ROOT/'placeholder-theme-agent.js').read_text()).replace('__SLOTS__',json.dumps(cfg))
+    assembled = (ROOT/'combined-agent.js').read_text().replace('/*BODY*/',body).replace('/*CHROME*/',(ROOT/'readable-chrome-agent.js').read_text()).replace('/*DETAIL*/',(ROOT/'artists-pane-agent.js').read_text()).replace('/*ARTWORK*/',(ROOT/'placeholder-theme-agent.js').read_text()).replace('__SLOTS__',json.dumps(cfg))
+    return adapt_source(assembled,c.verify(pid)[2])
 
 class Switch:
     def __init__(self,notify):

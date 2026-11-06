@@ -6,14 +6,21 @@ A small Windows switch that gives the desktop iTunes library a dark background, 
 
 ## Before you install
 
-* Use 64-bit Windows and the classic Apple desktop installation of **iTunes 12.13.11.1**. In iTunes, open **Help → About iTunes** to check your version. The switch looks for `iTunes\iTunes.exe` under the 64-bit Program Files folder and checks its SHA-256 before enabling the theme.
+* Use 64-bit Windows and the classic Apple desktop installation of **iTunes 12.13.11.1 or 12.13.12.3**. In iTunes, open **Help → About iTunes** to check your version. The switch looks for `iTunes\iTunes.exe` under the 64-bit Program Files folder and checks its SHA-256 before enabling the theme.
 * Open a local iTunes library at least once. The switch reads the current Windows account’s Apple preferences to locate its active `.itl` file.
 * Allow internet access for setup. The installer uses 64-bit Python 3.13 with Tk. If Python is missing, setup tries to install it for your account using Windows Package Manager. It then installs the versions of Frida and Pillow listed in `requirements.txt`.
 * The laptop tests used native Windows scaling at **125%**. A second PC, other native display scales, and physical sleep/wake still need testing. Windows popup menus use system colors.
 
 ## Verified executable
 
-Compatibility is checked against the executable fingerprint. The laptop used for the published tests reports file and product version **12.13.11.1**, with SHA-256 **c69e719cd3f2f9374e71c954a6de87002b6988af65129943983a2f17490dd73c**. **12.13.12.3 is awaiting verification**. Its drawing hooks must be checked before its executable can be accepted. An unsupported-build message shows the version detected on your computer.
+Compatibility is checked against the executable fingerprint. Both tested versions are supported.
+
+| Desktop iTunes version | SHA-256 of iTunes.exe |
+| --- | --- |
+| 12.13.11.1 | `c69e719cd3f2f9374e71c954a6de87002b6988af65129943983a2f17490dd73c` |
+| 12.13.12.3 | `2370b094ec723529907ae133b291fa4df97f6e95c13f4dd600b78283a1ed1d52` |
+
+Version 12.13.12.3 moved the drawing functions and changed the register used for rectangle geometry. The switch selects the verified drawing locations for each executable through `build_compat.py`. On the updated laptop, bounded rendering tests passed in Artists, Albums and Songs, including album-title contrast and placeholder artwork. Two GUI on/off cycles also passed. An unsupported-build message shows the version detected on your computer.
 
 ## Install and turn it on
 

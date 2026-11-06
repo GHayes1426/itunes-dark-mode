@@ -115,6 +115,8 @@ def child(args,c):
             ImageGrab.grab(bbox=(point.x,point.y+124,point.x+250,point.y+300),all_screens=True).save(path.with_name(path.stem+"-sidebar.png"))
         return str(path)
     try:
+        from build_compat import adapt_source
+        source=adapt_source(source,digest)
         session=frida.attach(pid);script=session.create_script(source)
         script.on("message",lambda m,d: result["messages"].append(m.get("payload",m)) if len(result["messages"])<16 else None)
         script.load()

@@ -12,6 +12,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 import frida
+from build_compat import OLD_BUILD, NEW_BUILD
 
 ROOT = Path(__file__).resolve().parent
 EXE = Path(os.environ["ProgramFiles"]) / "iTunes" / "iTunes.exe"
@@ -129,7 +130,7 @@ def executable_version(path):
 
 def verify(pid=None):
     digest = hashlib.sha256(EXE.read_bytes()).hexdigest()
-    if digest != EXPECTED:
+    if digest not in {OLD_BUILD, NEW_BUILD}:
         raise RuntimeError(
             f"Detected iTunes {executable_version(EXE)}. This executable has not been verified. "
             "See the README compatibility section for tested builds."

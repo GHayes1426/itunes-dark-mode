@@ -2,6 +2,7 @@
 import argparse, ctypes as C, importlib.util, json, subprocess, sys, time
 from pathlib import Path
 import frida
+from build_compat import adapt_source
 
 def common_at(root):
     spec=importlib.util.spec_from_file_location("common", root/"detach-isolation-runner.py")
@@ -27,11 +28,12 @@ def remove(script):
 
 def discover(pid):
     common = common_at(Path(__file__).resolve().parent)
-    verify(common, pid)
+    _, _, digest = verify(common, pid)
     window = common.one_window(pid)
     if common.module_names(pid) != [] or not common.responsive(window):
         raise RuntimeError("Close other theme switches and try again.")
     source = Path(__file__).with_name("d2d-discovery-only-agent.js").read_text()
+    source = adapt_source(source, digest)
     session = frida.attach(pid)
     try:
         script = session.create_script(source)
