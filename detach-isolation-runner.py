@@ -100,10 +100,40 @@ def responsive(hwnd):
     return bool(u.SendMessageTimeoutW(hwnd, 0, 0, 0, 2, 1500, c.byref(result)))
 
 
+def executable_version(path):
+    version = c.WinDLL("version", use_last_error=True)
+    version.GetFileVersionInfoSizeW.argtypes = [w.LPCWSTR, c.POINTER(w.DWORD)]
+    version.GetFileVersionInfoSizeW.restype = w.DWORD
+    version.GetFileVersionInfoW.argtypes = [w.LPCWSTR, w.DWORD, w.DWORD, c.c_void_p]
+    version.VerQueryValueW.argtypes = [c.c_void_p, w.LPCWSTR, c.POINTER(c.c_void_p), c.POINTER(w.UINT)]
+    ignored = w.DWORD()
+    size = version.GetFileVersionInfoSizeW(str(path), c.byref(ignored))
+    if not size:
+        return "unknown"
+    data = c.create_string_buffer(size)
+    if not version.GetFileVersionInfoW(str(path), 0, size, data):
+        return "unknown"
+    value = c.c_void_p()
+    length = w.UINT()
+    if not version.VerQueryValueW(data, "\\", c.byref(value), c.byref(length)) or length.value < 16:
+        return "unknown"
+    fields = c.cast(value, c.POINTER(w.DWORD))
+    if fields[0] != 0xFEEF04BD:
+        return "unknown"
+    major_minor, build_revision = fields[2], fields[3]
+    return ".".join(str(part) for part in (
+        major_minor >> 16, major_minor & 65535,
+        build_revision >> 16, build_revision & 65535,
+    ))
+
+
 def verify(pid=None):
     digest = hashlib.sha256(EXE.read_bytes()).hexdigest()
     if digest != EXPECTED:
-        raise RuntimeError("Unsupported iTunes build. This theme requires desktop iTunes 12.13.11.1 x64.")
+        raise RuntimeError(
+            f"Detected iTunes {executable_version(EXE)}. This executable has not been verified. "
+            "See the README compatibility section for tested builds."
+        )
     library = selected_library()
     pids = iTunes_pids()
     if len(pids) != 1 or (pid is not None and pids[0] != pid):
