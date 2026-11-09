@@ -24,6 +24,8 @@ const router={
 };
 function themed(factory){return component(rpc=>factory(rpc,router));}
 const albumGridLabels=[];
+const sidebarSelections=[];
+let observedLayout=null;
 const upper=themed(function(rpc,Interceptor){/*CHROME*/});
 const combinedLibraryTheme=true;
 const lower=themed(function(rpc,Interceptor){/*BODY*/});

@@ -3,7 +3,7 @@ let enabled=true,active=0,callbacks=0,count=0,removed=false,timer=null;
 const h=Interceptor.attach(Process.getModuleByName('gdiplus.dll').getExportByName('GdipFillRectangle'),{
 onEnter(){callbacks++;try{this.tracked=true;active++;if(enabled)count++;}finally{callbacks--; }},
 onLeave(){callbacks++;try{if(this.tracked)active--;}finally{callbacks--;}}});
-function status(){return {state:removed?'removed':enabled?'running':'disabled',active,callbacks,owned:0,count};}
+function status(){if(typeof observedLayout!=='undefined'&&layout)observedLayout={...layout};return {state:removed?'removed':enabled?'running':'disabled',active,callbacks,owned:0,count};}
 function disable(){enabled=false;if(timer!==null){clearTimeout(timer);timer=null;}return status();}
 rpc.exports={disable,remove(){if(enabled)throw Error('disable first');if(active||callbacks)return status();if(!removed){h.detach();Interceptor.flush();removed=true;}return status();}};
 timer=setTimeout(disable,10000);
@@ -17,7 +17,6 @@ const cm=nf('GdipCreateMatrix',['pointer']),dm=nf('GdipDeleteMatrix',['pointer']
 const rect=new NativeFunction(u.getExportByName('GetClientRect'),'bool',['pointer','pointer']),getpid=new NativeFunction(u.getExportByName('GetWindowThreadProcessId'),'uint',['pointer','pointer']),enabled=new NativeFunction(u.getExportByName('IsWindowEnabled'),'bool',['pointer']);
 const redraw=new NativeFunction(u.getExportByName('RedrawWindow'),'bool',['pointer','pointer','pointer','uint']);
 const foreground=new NativeFunction(u.getExportByName('GetForegroundWindow'),'pointer',[]),focus=new NativeFunction(u.getExportByName('GetFocus'),'pointer',[]);
-const getdc=new NativeFunction(u.getExportByName('GetDC'),'pointer',['pointer']),releasedc=new NativeFunction(u.getExportByName('ReleaseDC'),'int',['pointer','pointer']),clienttoscreen=new NativeFunction(u.getExportByName('ClientToScreen'),'bool',['pointer','pointer']),getpixel=new NativeFunction(Process.getModuleByName('gdi32.dll').getExportByName('GetPixel'),'uint',['pointer','int','int']);
 const fs=(p,n)=>Array.from({length:n},(_,i)=>p.add(i*4).readFloat());
 const eq=(a,b)=>a.length===b.length&&a.every((v,i)=>Number.isFinite(v)&&Math.abs(v-b[i])<.01);
 const fn=(o,s,r,a)=>new NativeFunction(o.readPointer().add(s*8).readPointer(),r,a,{traps:'none'});
@@ -35,12 +34,11 @@ function emit(o){send({phase,time:Date.now(),...o});}
 function bounds(){const b=Memory.alloc(16),p=Memory.alloc(4);getpid(HWND,p);if(p.readU32()!==PID||!enabled(HWND)||!rect(HWND,b))return null;return [b.add(8).readS32(),b.add(12).readS32()];}
 function invalidate(reason){generation++;layout=null;candidates={};painted={};rowTop=null;emit({kind:'invalidated',reason,generation});}
 function syncState(){const s=bounds();if(!s||s[0]<=250||s[1]<=154){invalidate('window-unavailable');return null;}const k=s.join(',');if(k!==sizeKey){sizeKey=k;invalidate('size');emit({kind:'size',size:s});}const next=foreground().toString()+'|'+focus().toString();if(next!==focusKey){focusKey=next;const previous=layout;invalidate('focus');if(previous&&previous.width===s[0]&&previous.height===s[1])layout={...previous,generation};}return s;}
-function backingPixelDark(d){const dc=getdc(ptr(0)),pt=Memory.alloc(8);pt.writeS32(Math.max(0,Math.floor(d[0]-4)));pt.add(4).writeS32(Math.max(0,Math.floor((d[1]+d[3])/2)));if(dc.isNull())return false;try{if(!clienttoscreen(HWND,pt))return false;const c=getpixel(dc,pt.readS32(),pt.add(4).readS32());if(c===0xffffffff)return false;const r=c&255,g=(c>>>8)&255,b=(c>>>16)&255;return Math.max(r,g,b)<128||(b>150&&b>r*1.4&&b>g*1.15);}finally{releasedc(ptr(0),dc);}}
 function matrix(g){const o=Memory.alloc(8),b=Memory.alloc(24);if(cm(o)!==0)return null;const m=o.readPointer();try{if(gw(g,m)||ge(m,b))return null;return fs(b,6);}finally{dm(m);}}
 function release(b){fn(b,2,'uint',['pointer'])(b);}
 function brush(b){const o=Memory.alloc(8);if(fn(b,0,'int',['pointer','pointer','pointer'])(b,iid,o)<0)return null;const q=o.readPointer();try{const c=Memory.alloc(16);fn(q,9,'pointer',['pointer','pointer'])(q,c);return {rgba:fs(c,4),opacity:fn(q,6,'float',['pointer'])(q)};}finally{release(q);}}
 function disable(){stopping=true;armed=false;if(watchdog!==null){clearTimeout(watchdog);watchdog=null;}return status();}
-function status(){return {state:removed?'removed':stopping?'disabled':'running',inFlight,callbacks,owned,active,counts,layout,resources};}
+function status(){if(typeof observedLayout!=='undefined'&&layout)observedLayout={...layout};return {state:removed?'removed':stopping?'disabled':'running',inFlight,callbacks,owned,active,counts,layout,resources};}
 function remove(){if(!stopping)throw Error('disable first');if(inFlight||callbacks||owned||active)return status();if(!removed){hooks.forEach(h=>h.detach());Interceptor.flush();removed=true;stopped=true;emit({kind:'hooks-removed',...status()});}return status();}
 function error(e){counts.errors++;emit({kind:'error',message:String(e)});disable();}
 hooks.push(trackedAttach(gd.getExportByName('GdipFillRectangle'),{onEnter(a){this.temp=null;if(stopping)return;try{
@@ -66,7 +64,7 @@ hooks.push(trackedAttach(gd.getExportByName('GdipFillRectangle'),{onEnter(a){thi
  const l=candidates.sidebar,v=candidates.content;
  if(l&&v&&l.generation===generation&&v.generation===generation&&eq([l.r[2],l.t[5],l.r[3]],[v.t[4],v.t[5],v.r[3]])&&l.thread===v.thread){
   const next={width:s[0],height:s[1],split:l.r[2],top:l.t[5],thread:l.thread,generation};
-  if(!layout)emit({kind:'layout',...next});layout=next;
+  if(!layout)emit({kind:'layout',...next});layout=next;if(typeof observedLayout!=='undefined')observedLayout={...next};
  }
  if(!armed||!layout||layout.thread!==this.threadId||MODE==='observe')return;
  const expected=region==='sidebar'?[0,layout.top,layout.split,s[1]-layout.top]:[layout.split,layout.top,s[0]-layout.split,s[1]-layout.top];
@@ -86,17 +84,13 @@ function discover(target){if(!['text','combined'].includes(MODE))return;const ad
  const gridLabel=region==='content'&&typeof albumGridLabels!=='undefined'&&albumGridLabels.some(p=>Date.now()-p.time<2000&&p.thread===this.threadId&&d[0]>=p.rect[0]&&d[1]>=p.rect[1]&&d[2]<=p.rect[2]&&d[3]<=p.rect[3]);
  if(region==='content'&&!gridLabel&&(rowTop===null||d[1]<rowTop))return;
  const original=brush(a[5]);if(!original)return;
+ const selected=region==='sidebar'&&typeof sidebarSelections!=='undefined'&&sidebarSelections.some(p=>Date.now()-p.time<2000&&d[1]>=p.rect[1]&&d[3]<=p.rect[3]);
 
+
+ const gridGray=gridLabel&&original.rgba[3]===1&&original.rgba[0]===original.rgba[1]&&original.rgba[1]===original.rgba[2]&&original.rgba[0]<=.51;
  const knownHeading=typeof combinedLibraryTheme!=='undefined'&&region==='sidebar'&&eq(d,[15,128,60,146])&&eq(original.rgba,[.251,.251,.251,1]);
- // The screen DC can still show the prior light frame during buffered painting.
- // These five sidebar rows are inside the successful fill for this generation.
- const knownRow=typeof combinedLibraryTheme!=='undefined'&&region==='sidebar'&&
-   [[58,154,174,177],[58,184,105,207],[58,214,114,237],[58,244,103,267],[58,274,110,297]].some(r=>eq(d,r));
- let inactiveSelection=false;
- if(knownRow){const pt=Memory.alloc(8);pt.writeS32(175);pt.add(4).writeS32(Math.floor((d[1]+d[3])/2));const dc=getdc(ptr(0));if(!dc.isNull()){try{if(clienttoscreen(HWND,pt))inactiveSelection=getpixel(dc,pt.readS32(),pt.add(4).readS32())===0xd9d9d9;}finally{releasedc(ptr(0),dc);}}}
- const sidebarBackingEligible=!inactiveSelection&&(region!=='sidebar'||knownHeading||knownRow||backingPixelDark(d));
- if((!knownHeading&&!eq(original.rgba,[0,0,0,1]))||Math.abs(original.opacity-1)>.001||!sidebarBackingEligible){counts.preservedText++;emit({kind:'text-preserved',region,original,rect:d,reason:'color-or-sidebar-backing'});return;}
- const col=Memory.alloc(16);[236/255,236/255,236/255,1].forEach((v,i)=>col.add(i*4).writeFloat(v));const out=Memory.alloc(8);
+ if((!selected&&!knownHeading&&!gridGray&&!eq(original.rgba,[0,0,0,1]))||Math.abs(original.opacity-1)>.001){counts.preservedText++;emit({kind:'text-preserved',region,original,rect:d,reason:'color-or-sidebar-backing'});return;}
+ const col=Memory.alloc(16);[selected?0:236/255,selected?0:236/255,selected?0:236/255,1].forEach((v,i)=>col.add(i*4).writeFloat(v));const out=Memory.alloc(8);
  const hr=fn(a[0],8,'int',['pointer','pointer','pointer','pointer'])(a[0],col,ptr(0),out);if(hr<0)throw Error('D2D brush creation '+hr);
  this.temp=out.readPointer();a[5]=this.temp;active++;owned++;resources.d2dCreated++;resources.peakOwned=Math.max(resources.peakOwned,owned);counts.text++;emit({kind:'text',region,rect:d,original,newColor:'#ECECEC',returnRva:'0xb3c42e'});
  }catch(e){error(e);}},onLeave(){if(this.temp){release(this.temp);resources.d2dReleased++;active--;owned--;}}}));}

@@ -39,7 +39,7 @@ const hook=Interceptor.attach(gd.getExportByName('GdipDrawImageRectRect'),{
  this.track=true;active++;
  try{
  const out=Memory.alloc(8);
- if(width(a[1],out)!==0)return;const w=out.readU32();if(!known[w]||height(a[1],out)!==0||out.readU32()!==w)return;
+ if(width(a[1],out)!==0)return;const w=out.readU32();if(height(a[1],out)!==0||out.readU32()!==w)return;
  if(w>=100&&typeof albumGridLabels!=='undefined'){
   const b=Memory.alloc(16);
   if(clip(a[0],b)===0){
@@ -47,13 +47,15 @@ const hook=Interceptor.attach(gd.getExportByName('GdipDrawImageRectRect'),{
    if(points(a[0],2,0,b,2)===0){
     const d=Array.from({length:4},(_,i)=>b.add(i*4).readFloat());
     if(!cfg.continuous)lastGeometry={d,w,shared:typeof albumGridLabels};
-    if(d[0]>=250&&d[1]>=124&&Math.abs(d[2]-d[0]-w)<=1&&Math.abs(d[3]-d[1]-w)<=1){
+    const displayedWidth=d[2]-d[0],displayedHeight=d[3]-d[1];
+    if(d[0]>=250&&d[1]>=124&&displayedWidth>=100&&displayedWidth<=600&&Math.abs(displayedHeight-displayedWidth)<=2){
      if(albumGridLabels.length>=64)albumGridLabels.shift();
-     albumGridLabels.push({time:Date.now(),thread:this.threadId,rect:[d[0]-2,d[1]+w+8,d[2],d[1]+w+33]});
+     albumGridLabels.push({time:Date.now(),thread:this.threadId,rect:[d[0]-3,d[3]+3,d[2]+3,d[3]+60]});
     }
    }
   }
  }
+ if(!known[w])return;
  if(fingerprint(a[1],w)!==known[w]){rejected++;return;}
  if((a[11].isNull()?create(out):clone(a[11],out))!==0)throw Error('attribute create');
  this.attr=out.readPointer();owned++;created++;

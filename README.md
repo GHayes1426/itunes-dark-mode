@@ -52,6 +52,14 @@ The changes last for the active session. Turning the switch off removes the draw
 | Windows DPI compatibility mode | Check the iTunes executable’s compatibility settings for a high-DPI scaling override. Use native scaling and restart iTunes. |
 | Switch stops after changing libraries | Open the intended library and enable the switch again. For more detail, inspect the latest `switch-*.jsonl` file in the extracted folder. |
 
+## Layout and control updates
+
+The theme measures painted library surfaces and artwork bounds as iTunes redraws. Album labels follow the displayed artwork size, and Artists and Genres follow the current panel boundaries. The selected sidebar row is detected from the drawing buffer and receives a white background with black text. Sidebar icons use light colors on dark rows.
+
+Search and playback controls repaint their dark backing when their state changes. The switch window has a DPI-scaled minimum size and can be widened to keep its title-bar controls accessible.
+
+The latest laptop checks covered a resized Artists column, Genres, Recently Added, Albums, Songs, clicked playback controls, album-title contrast, and two on/off cycles with clean restoration. These changes still require confirmation on the main PC. Native display scales beyond the tested 125% and Windows bitmap-scaled compatibility mode remain outside the verified coverage.
+
 ## Update or uninstall
 
 Close the switch first. To update, extract a fresh download into a new folder and run its **Install.cmd**. To uninstall, delete the extracted theme folder, including its local Python environment. A Python installation added by Windows Package Manager is separate and can be managed in Windows **Installed apps**.
