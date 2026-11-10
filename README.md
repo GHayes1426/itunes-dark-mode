@@ -27,9 +27,9 @@ Version 12.13.12.3 moved the drawing functions and changed the register used for
 1. Download the ZIP above. In File Explorer, right-click it and choose **Extract All**. Pick a folder you can write to and plan to keep, such as a folder under Documents.
 2. Open the extracted folder containing **Install.cmd** and **Dark Mode.vbs**. Double-click **Install.cmd**. If Windows Package Manager asks you to approve installing Python, review its prompt. Let the console finish downloading the dependencies.
 3. Setup opens a small **iTunes Dark Mode** window. Open iTunes with your usual library and select **Albums**, **Artists**, or **Songs**.
-4. Check **Dark mode**. The status changes from **Connecting…** to **On** and the library repaints. Keep the switch window open while using the theme.
+4. Check **Dark mode**. The status changes from **Connecting…** to **On** and the library repaints. Close the switch window with **X** whenever you want. Dark mode keeps running in the background.
 
-For later sessions, double-click **Dark Mode.vbs** in the extracted folder. Uncheck **Dark mode** to restore the original colors, or close the switch and allow it to finish disconnecting. If you restart iTunes while the switch is enabled, it watches for the new process.
+For later sessions, double-click **Dark Mode.vbs** in the extracted folder. If the switch is already running, this brings its existing window back. Uncheck **Dark mode** to restore the original colors. Choose **Quit and turn off** to restore the colors and exit the background process. If you restart iTunes while the switch is enabled, it watches for the new process.
 
 ## How it works
 
@@ -56,13 +56,13 @@ The changes last for the active session. Turning the switch off removes the draw
 
 The theme measures painted library surfaces and artwork bounds as iTunes redraws. Album labels follow the displayed artwork size, and Artists and Genres follow the current panel boundaries. The selected sidebar row is detected from the drawing buffer and receives a white background with black text. Sidebar icons use light colors on dark rows.
 
-Search and playback controls repaint their dark backing when their state changes. The switch window has a DPI-scaled minimum size and can be widened to keep its title-bar controls accessible.
+Search and playback controls repaint their dark backing when their state changes. The switch window has a DPI-scaled minimum size and can be widened to keep its title-bar controls accessible. Closing its window hides it while the theme continues. Reopening the launcher shows the existing switch.
 
 The latest laptop checks covered a resized Artists column, Genres, Recently Added, Albums, Songs, clicked playback controls, album-title contrast, and two on/off cycles with clean restoration. These changes still require confirmation on the main PC. Native display scales beyond the tested 125% and Windows bitmap-scaled compatibility mode remain outside the verified coverage.
 
 ## Update or uninstall
 
-Close the switch first. To update, extract a fresh download into a new folder and run its **Install.cmd**. To uninstall, delete the extracted theme folder, including its local Python environment. A Python installation added by Windows Package Manager is separate and can be managed in Windows **Installed apps**.
+Open **Dark Mode.vbs** and choose **Quit and turn off** first. To update, extract a fresh download into a new folder and run its **Install.cmd**. To uninstall, choose **Quit and turn off**, then delete the extracted theme folder, including its local Python environment. A Python installation added by Windows Package Manager is separate and can be managed in Windows **Installed apps**.
 
 ## Source and developer tools
 
