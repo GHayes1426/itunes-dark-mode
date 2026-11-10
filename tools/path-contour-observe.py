@@ -52,4 +52,3 @@ try:
  Path('path-observe.json').write_text(json.dumps(events,indent=2))
  print(json.dumps(events[-40:],indent=2))
 finally:session.detach()
-
