@@ -16,7 +16,10 @@ function flatMatrix(shade) {
  matrix.add(24*4).writeFloat(1);
  return matrix;
 }
-const whiteMatrix=flatMatrix(1),blackMatrix=flatMatrix(0);
+const whiteMatrix=flatMatrix(1),blackMatrix=flatMatrix(0),popupMatrix=flatMatrix(33/255);
+const popupThreads=new Map();
+function inPopup(thread){return Date.now()-(popupThreads.get(thread)||0)<2000;}
+const popupEndHook=Interceptor.attach(Process.getModuleByName('user32.dll').getExportByName('UpdateLayeredWindow'),{onLeave(){popupThreads.delete(this.threadId);}});
 function selectedSidebar(rect) {
  return typeof sidebarSelections!=='undefined'&&sidebarSelections.some(p=>
   Date.now()-p.time<2000&&rect[1]>=p.rect[1]&&rect[3]<=p.rect[3]);
@@ -53,6 +56,70 @@ const selectClip=native(gdi,'SelectClipRgn','int',['pointer','pointer']);
 const readPixel=native(gdi,'GetPixel','uint',['pointer','int','int']);
 const stockBrush=native(gdi,'GetStockObject','pointer',['int']);
 const fillNative=native(user,'FillRect','int',['pointer','pointer','pointer']);
+// Native Edit paints over iTunes' cached search bitmap. Theme its color request,
+// without replacing any window procedure or handling input messages.
+const findChild=native(user,'FindWindowExW','pointer',['pointer','pointer','pointer','pointer']);
+const procAddress=native(user,'GetWindowLongPtrW','pointer',['pointer','int']);
+const setTextColor=native(gdi,'SetTextColor','uint',['pointer','uint']);
+const setBgColor=native(gdi,'SetBkColor','uint',['pointer','uint']);
+const makeNativeBrush=native(gdi,'CreateSolidBrush','pointer',['uint']);
+const deleteNativeBrush=native(gdi,'DeleteObject','bool',['pointer']);
+const editClass=Memory.allocUtf16String('Edit'),buttonClass=Memory.allocUtf16String('Button');
+let editColorHook=null,editBrush=null,searchParent=null,searchEdit=null,nativeCreated=0,nativeDeleted=0;
+function watchSearchEdit(){
+ let parent=ptr(0);
+ for(let i=0;i<64;i++){
+  parent=findChild(ptr(config.hwnd),parent,buttonClass,ptr(0));if(parent.isNull())return;
+  const edit=findChild(parent,ptr(0),editClass,ptr(0));if(edit.isNull())continue;
+  const address=procAddress(parent,-4);if(address.isNull())return;
+  searchParent=parent;searchEdit=edit;
+  if(editColorHook)return;
+  editBrush=makeNativeBrush(0x171717);if(editBrush.isNull())throw Error('Search brush creation failed');nativeCreated++;
+  editColorHook=Interceptor.attach(address,{
+   onEnter(args){this.colorEdit=!stopping&&armed&&args[0].equals(searchParent)&&args[1].toUInt32()===0x133&&args[3].equals(searchEdit);if(this.colorEdit){this.dc=args[2];active++;}},
+   onLeave(result){if(this.colorEdit){setTextColor(this.dc,0xececec);setBgColor(this.dc,0x171717);result.replace(editBrush);active--;}}
+  });return;
+ }
+}
+// iTunes paints inactive rounded track selections through CoreGraphics,
+// bypassing GDI+. Qualify the neutral row path and preserve its graphics state.
+const cg=Process.getModuleByName('CoreGraphics.dll');
+const cgFillColor=native(cg,'CGContextGetFillColorAsColor','pointer',['pointer']);
+const cgComponents=native(cg,'CGColorGetComponents','pointer',['pointer']);
+const cgComponentCount=native(cg,'CGColorGetNumberOfComponents','uint64',['pointer']);
+const cgBounds=native(cg,'CGContextGetPathBoundingBox',['double','double','double','double'],['pointer']);
+const cgClip=native(cg,'CGContextGetDeviceClipBoundingBox',['double','double','double','double'],['pointer']);
+const cgCopyPath=native(cg,'CGContextCopyPath','pointer',['pointer']);
+const cgReleasePath=native(cg,'CGPathRelease','void',['pointer']);
+const cgApplyPath=native(cg,'CGPathApply','void',['pointer','pointer','pointer']);
+const countPath=new NativeCallback((info,element)=>{
+ const type=element.readS32();info.writeU32(info.readU32()+1);info.add(12).writeU32(type);
+ if(type===0)info.add(4).writeU32(info.add(4).readU32()+1);
+ if(type===4)info.add(8).writeU32(info.add(8).readU32()+1);
+},'void',['pointer','pointer']);
+function singleRowContour(context){
+ const path=cgCopyPath(context);if(path.isNull())return false;
+ const counts=Memory.alloc(16);counts.writeByteArray(new Uint8Array(16));
+ try{cgApplyPath(path,counts,countPath);return counts.readU32()<=12&&counts.readU32()>=5&&(counts.add(4).readU32()===1||(counts.add(4).readU32()===2&&counts.add(12).readU32()===0))&&counts.add(8).readU32()===1;}
+ finally{cgReleasePath(path);}
+}
+const cgSave=native(cg,'CGContextSaveGState','void',['pointer']);
+const cgRestore=native(cg,'CGContextRestoreGState','void',['pointer']);
+const cgSetFill=native(cg,'CGContextSetRGBFillColor','void',['pointer','double','double','double','double']);
+const rowPathHook=Interceptor.attach(cg.getExportByName('CGContextFillPath'),{
+ onEnter(args){callbacks++;try{
+  if(stopping||!armed||!windowMatches()||Process.findModuleByAddress(this.returnAddress)?.name!=='iTunes.exe')return;
+  const color=cgFillColor(args[0]);if(color.isNull()||Number(cgComponentCount(color))!==4)return;
+  const p=cgComponents(color),v=Array.from({length:4},(_,i)=>p.add(i*8).readDouble());
+  if(v[3]!==1||!v.slice(0,3).every(n=>Math.abs(n-.85)<.005))return;
+  const box=cgBounds(args[0]),cl=cgClip(args[0]);
+  if(cl[0]<sidebarWidth()||cl[0]+cl[2]>clientW||box[2]<100||box[3]<18||box[3]>80||Math.abs(box[2]-cl[2])>1||Math.abs(box[3]-cl[3])>1)return;
+  if(!singleRowContour(args[0]))return;
+  cgSave(args[0]);this.rowContext=args[0];active++;
+  cgSetFill(args[0],33/255,33/255,33/255,1);
+ }catch(error){errors.push(String(error));}finally{callbacks--; }},
+ onLeave(){if(this.rowContext){try{cgRestore(this.rowContext);}finally{active--;}}}
+});
 function sidebarWidth() {
  return typeof observedLayout!=='undefined'&&observedLayout?observedLayout.split:250;
 }
@@ -108,7 +175,7 @@ onEnter(a){callbacks++;this.tracked=false;try{
  const corners=Memory.alloc(32);const [x,y,w,h]=clipXYWH;[x,y,x+w,y,x+w,y+h,x,y+h].forEach((v,i)=>corners.add(i*4).writeFloat(v));check(points(a[0],2,0,corners,4));
  const deviceCorners=floats(corners,8);const scrollClip=deviceCorners[2]-deviceCorners[0]===19&&deviceCorners[0]>=250&&deviceCorners[1]>=124&&deviceCorners[5]<=clientH;
  const sidebarClip=deviceCorners[0]>=0&&deviceCorners[2]<=sidebarWidth()&&deviceCorners[1]>=124;
- if(!scrollClip&&!sidebarClip&&Math.min(deviceCorners[1],deviceCorners[3],deviceCorners[5],deviceCorners[7])>=154)return;
+ // Popup and expanded-album assets are qualified below by source signature.
  check(cm(o));const matrix=o.readPointer();owned++;let transform;
  try{check(world(a[0],matrix));check(elements(matrix,b));transform=floats(b,6);}finally{check(dm(matrix));owned--;}
  check(imageType(a[1],b));const type=b.readU32();check(imageWidth(a[1],b));const width=b.readU32();check(imageHeight(a[1],b));const height=b.readU32();
@@ -119,6 +186,7 @@ onEnter(a){callbacks++;this.tracked=false;try{
  const signature={caller:e.caller,width:e.width,height:e.height,sourceXYWH:e.sourceXYWH,destinationWH:e.destinationWH,transform:e.transform,deviceCorners:e.deviceCorners,colors:e.samples.map(s=>s.argb)};
  const scroll=scrollClip&&e.caller.rva==="0xb391ba"&&width===30&&[30,48,52].includes(height)&&e.destinationWH[0]===19;
  const d=deviceCorners;
+ if(d[0]===0&&d[1]===82&&d[2]===clientW&&d[5]===124)popupThreads.delete(this.threadId);
  const icon=sidebarClip&&d[0]>=15&&d[2]<=50&&d[5]-d[1]<=35&&width<=128&&height<=128;
  if(icon)updateSidebarSelection(a[0],deviceCorners);
  const selection=sidebarClip&&d[0]===0&&d[2]===250&&d[5]-d[1]>=25&&d[5]-d[1]<=32;
@@ -128,17 +196,24 @@ onEnter(a){callbacks++;this.tracked=false;try{
   sidebarSelections.push({time:Date.now(),rect:[d[0],d[1],d[2],d[5]]});
  }
  const playbackButton=d[1]>=0&&d[5]<=56&&d[0]>=35&&d[2]<=190&&width===60&&height===60;
- if(searchFrame||playbackButton)clearControlBackground(a[0],clipXYWH);
+ const captionButton=width===50&&height===36&&d[1]===0&&d[5]<=30&&d[0]>=clientW-110;
+ if(searchFrame||playbackButton||captionButton)clearControlBackground(a[0],clipXYWH);
  const progress=d[0]>sidebarWidth()&&d[1]>=30&&d[5]<=60&&d[2]-d[0]>100&&height===20&&[16,52].includes(width);
  if(progress&&width===52&&e.destinationWH[0]>16&&e.samples[1]?.argb==='0x80939393')clearControlBackground(a[0],clipXYWH);
  const titleBacking=d[1]===0&&d[5]===56&&d[0]>=sidebarWidth()&&d[2]<clientW-100&&height===56&&width>=200;
  const controlBacking=d[1]>=0&&d[5]<=56&&width===90&&height===60;
- const special=titleBacking||controlBacking?{mode:'opaque',region:'title'}:progress?{mode:'progress',region:'title'}:selection?{mode:'selection',region:'sidebar'}:icon?{mode:'icon',region:'sidebar'}:searchFrame?{mode:'frame',region:'title'}:null;
+ const popupBackground=width===328&&height===328&&d[0]===0&&d[1]===0&&d[2]<clientW&&e.samples.map(s=>s.argb).join(',')==='0x0,0xfaf4f4f4,0x0';
+ if(popupBackground)popupThreads.set(this.threadId,Date.now());
+ const popupAsset=inPopup(this.threadId)&&(popupBackground||(width===80&&height===92)||(width===38&&height===44));
+ const cachedText=d[1]>=0&&d[5]<=56&&d[0]>=sidebarWidth()&&width>40&&height<=40&&e.samples[0]?.argb==='0xffffffff'&&e.samples[2]?.argb==='0xffffffff';
+ if(cachedText){watchSearchEdit();clearControlBackground(a[0],clipXYWH);}
+ const albumSeparator=d[0]>=sidebarWidth()&&d[1]>=124&&width===80&&height===26&&e.samples.map(s=>s.argb).join(',')==='0xffffffff,0x0,0x0';
+ const special=albumSeparator?{mode:'separator',region:'album'}:popupAsset?{mode:'popup',region:'popup'}:cachedText?{mode:'textBitmap',region:'title'}:titleBacking||controlBacking?{mode:'opaque',region:'title'}:progress?{mode:'progress',region:'title'}:selection?{mode:'selection',region:'sidebar'}:icon?{mode:'icon',region:'sidebar'}:searchFrame?{mode:'frame',region:'title'}:null;
  const match=special||(scroll?{mode:"scroll",region:"scrollbar"}:config.allowed.find(item=>matchesLayout(item,signature)));
  if(match&&(special||scroll||match.mode==='opaque'||bases[match.region])&&e.sourceUnit===2&&e.samples.every(s=>s.status===0)){
   const out=Memory.alloc(Process.pointerSize);check(a[11].isNull()?createAttr(out):cloneAttr(a[11],out));
   this.attribute=out.readPointer();owned++;created++;
-  check(setMatrix(this.attribute,1,1,selection?whiteMatrix:icon?(selectedSidebar([d[0],d[1],d[2],d[5]])?blackMatrix:whiteMatrix):searchFrame?frameMatrix:match.mode==='opaque'?colorMatrix:invertMatrix,ptr(0),0));
+  check(setMatrix(this.attribute,1,1,popupAsset||albumSeparator?popupMatrix:selection?whiteMatrix:icon?(selectedSidebar([d[0],d[1],d[2],d[5]])?blackMatrix:whiteMatrix):searchFrame?frameMatrix:match.mode==='opaque'?colorMatrix:invertMatrix,ptr(0),0));
   a[11]=this.attribute;substitutions++;e.substituted=true;e.region=match.region;e.mode=match.mode;
  }
 
@@ -159,7 +234,7 @@ const textHook=Interceptor.attach(textAddress,{
   if(JSON.stringify(t.slice(0,4))!=='[1,0,0,1]')return;
   method(a[0],52,'void',['pointer','pointer','pointer'])(a[0],buf,buf.add(4));if(JSON.stringify(floats(buf,2))!=='[96,96]')return;
   const r=floats(a[4],4),d=[r[0]+t[4],r[1]+t[5],r[2]+t[4],r[3]+t[5]];
-  if(!painted.some(p=>p.thread===this.threadId&&d[0]>=p.rect[0]&&d[1]>=p.rect[1]&&d[2]<=p.rect[2]&&d[3]<=p.rect[3]))return;
+  if(!inPopup(this.threadId)&&!painted.some(p=>p.thread===this.threadId&&d[0]>=p.rect[0]&&d[1]>=p.rect[1]&&d[2]<=p.rect[2]&&d[3]<=p.rect[3]))return;
   const out=Memory.alloc(8);if(method(a[5],0,'int',['pointer','pointer','pointer'])(a[5],iid,out)<0)return;
   const solid=out.readPointer();let rgba,opacity;try{method(solid,9,'pointer',['pointer','pointer'])(solid,buf);rgba=floats(buf,4);opacity=method(solid,6,'float',['pointer'])(solid);}finally{release(solid);}
   if(rgba[3]!==1||opacity!==1||Math.abs(rgba[0]-rgba[1])>.001||Math.abs(rgba[1]-rgba[2])>.001||rgba[0]>.51)return;
@@ -209,5 +284,5 @@ const menuTextHook=Interceptor.attach(gd.getExportByName('GdipDrawString'),{
  onLeave(){callbacks++;try{if(this.brush){check(deleteBrush(this.brush));owned--;menuDeleted++;}if(this.tracked)active--;}finally{callbacks--;}}
 });
 
-function status(){return {errors:errors.length,active,callbacks,owned,stopping,removed,substitutions,created,disposed,textCreated,textReleased,menuCreated,menuDeleted,menuFills,menuLabels};}
-rpc.exports={mark(p){if(active||callbacks)throw Error('not quiescent');stopCapture();phase=p;events=[];errors=[];count=0;dropped=0;bases={};painted=[];textEvents=[];armed=true;if(!config.continuous)timer=setTimeout(stopCapture,1500);return status();},report(){stopCapture();return {phase,count,events,textEvents,errors,dropped,cap:160,destinationQualification:'X/Y held in XMM registers were not decoded; clip bounds are not destination bounds.'};},beginstop(){stopping=true;stopCapture();return status();},remove(){if(stopping&&!active&&!callbacks&&!owned&&!removed){hook.detach();textHook.detach();menuBgHook.detach();menuTextHook.detach();Interceptor.flush();removed=true;}return status();},status};
+function status(){return {errors:errors.length,active,callbacks,owned,stopping,removed,substitutions,created,disposed,textCreated,textReleased,menuCreated,menuDeleted,menuFills,menuLabels,nativeCreated,nativeDeleted};}
+rpc.exports={mark(p){if(active||callbacks)throw Error('not quiescent');stopCapture();phase=p;events=[];errors=[];count=0;dropped=0;bases={};painted=[];textEvents=[];armed=true;if(!config.continuous)timer=setTimeout(stopCapture,1500);return status();},report(){stopCapture();return {phase,count,events,textEvents,errors,dropped,cap:160,destinationQualification:'X/Y held in XMM registers were not decoded; clip bounds are not destination bounds.'};},beginstop(){stopping=true;stopCapture();return status();},remove(){if(stopping&&!active&&!callbacks&&!owned&&!removed){hook.detach();textHook.detach();menuBgHook.detach();menuTextHook.detach();popupEndHook.detach();rowPathHook.detach();popupThreads.clear();if(editColorHook)editColorHook.detach();if(editBrush){if(!deleteNativeBrush(editBrush))throw Error('Search brush disposal failed');nativeDeleted++;editBrush=null;}Interceptor.flush();removed=true;}return status();},status};

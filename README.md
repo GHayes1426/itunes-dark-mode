@@ -60,6 +60,16 @@ Search and playback controls repaint their dark backing when their state changes
 
 The latest laptop checks covered a resized Artists column, Genres, Recently Added, Albums, Songs, clicked playback controls, album-title contrast, and two on/off cycles with clean restoration. These changes still require confirmation on the main PC. Native display scales beyond the tested 125% and Windows bitmap-scaled compatibility mode remain outside the verified coverage.
 
+## Popup, hover and expanded-album fixes
+
+Search and Up Next now theme their popup frame and text. The focused Search field also uses a dark native edit background with light text. The theme observes that control's color request; it does not replace its window procedure or intercept mouse clicks.
+
+Expanded-album separators follow their current drawing position, including partial repaints. Artist-list and album-panel redraws preserve the other dark regions, and partially transparent album labels remain readable. Inactive selected track rows use a dark background, including the rounded CoreGraphics path painted when focus moves to Search. Caption buttons clear their backing before drawing hover frames so translucent highlights do not accumulate.
+
+The November 9–10 laptop checks on **12.13.12.3 at 125% scaling** covered focused Search, populated Up Next, three distinct artist names, expanded albums, selected labels, playback hover, caption hover, one-click minimize/maximize, two On/Off cycles, and hiding/reopening/quitting the switch. The native Search brush was released and all instrumentation detached. The reported two-click behavior was not reproduced on the laptop and still needs confirmation on the main PC. These checks do not establish coverage for every popup state or display scale.
+
+An already-open popup may retain its cached colors when dark mode is turned off. Dismiss and reopen Search or Up Next to refresh it.
+
 ## Update or uninstall
 
 Open **Dark Mode.vbs** and choose **Quit and turn off** first. To update, extract a fresh download into a new folder and run its **Install.cmd**. To uninstall, choose **Quit and turn off**, then delete the extracted theme folder, including its local Python environment. A Python installation added by Windows Package Manager is separate and can be managed in Windows **Installed apps**.

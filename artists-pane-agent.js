@@ -30,7 +30,8 @@ hooks.push(Interceptor.attach(addr,{onEnter(a){cb++;try{
  const d=floats(a[4],4).map((v,i)=>v+t[4+i%2]);
  if(d[3]<=T||d[1]>=H)return;
  d[1]=Math.max(d[1],T);d[3]=Math.min(d[3],H);
- const album=albumThread===this.threadId&&d[0]>=250&&d[1]>=459&&d[2]<=W-19&&d[3]<=Math.min(786,H);
+ const gridLabel=typeof albumGridLabels!=='undefined'&&albumGridLabels.some(p=>Date.now()-p.time<2000&&p.thread===this.threadId&&d[0]>=p.rect[0]&&d[1]>=p.rect[1]&&d[2]<=p.rect[2]&&d[3]<=p.rect[3]);
+ const album=gridLabel||albumThread===this.threadId&&d[0]>=250&&d[1]>=459&&d[2]<=W-19&&d[3]<=Math.min(786,H);
  if(!album&&(d[0]<S||d[1]<T||d[2]>W||d[3]>H))return;
  const o=Memory.alloc(8);if(method(a[5],0,'int',['pointer','pointer','pointer'])(a[5],iid,o)<0)return;
  const solid=o.readPointer();let rgba,opacity;
@@ -41,11 +42,11 @@ hooks.push(Interceptor.attach(addr,{onEnter(a){cb++;try{
  const e={op:'text',d,rgba,opacity,onDark:album||insidePaintedRegion||fillThread===this.threadId};
  const row=fillThread===this.threadId&&d[0]===745&&d[3]-d[1]===22&&d[2]<=W-42&&regions.some(r=>r[0]===677&&r[1]<=d[1]&&r[3]>=d[3]);
  // Leave the track row's native highlight and label alone until its background is known.
- const albumLabel=album&&(d[3]<=640||d[1]>=680||cfg.albumRowBase==='#F7F7F9');
- const black=JSON.stringify(rgba)==='[0,0,0,1]';
- const gray=rgba[3]===1&&rgba[0]===rgba[1]&&rgba[0]===rgba[2]&&Math.abs(rgba[0]-.251)<.002;
- if(cfg.probe&&opacity===1&&(!matchingRegion||matchingRegion[4]!==false)&&(insidePaintedRegion&&(black||gray)||artistRow&&(black||gray)||e.onDark&&((albumLabel&&(black||gray))||((black||gray)&&!album&&(row||regions.some(r=>r[0]<=d[0]&&r[1]<=d[1]&&r[2]>=d[2]&&r[3]>=d[3])))))){
- const co=Memory.alloc(16);[236/255,236/255,236/255,1].forEach((v,i)=>co.add(i*4).writeFloat(v));
+ const albumLabel=gridLabel||album&&(d[3]<=640||d[1]>=680||cfg.albumRowBase==='#F7F7F9');
+ const black=rgba[3]>0&&rgba.slice(0,3).every(v=>v===0);
+ const gray=rgba[3]>0&&rgba[0]===rgba[1]&&rgba[0]===rgba[2]&&Math.abs(rgba[0]-.251)<.002;
+ if(cfg.probe&&opacity===1&&(gridLabel||!matchingRegion||matchingRegion[4]!==false)&&(insidePaintedRegion&&(black||gray)||artistRow&&(black||gray)||e.onDark&&((albumLabel&&(black||gray))||((black||gray)&&!album&&(row||regions.some(r=>r[0]<=d[0]&&r[1]<=d[1]&&r[2]>=d[2]&&r[3]>=d[3])))))){
+ const co=Memory.alloc(16);[236/255,236/255,236/255,rgba[3]].forEach((v,i)=>co.add(i*4).writeFloat(v));
  if(method(a[0],8,'int',['pointer','pointer','pointer','pointer'])(a[0],co,ptr(0),o)<0)throw Error('text brush failed');
  this.light=o.readPointer();a[5]=this.light;lightCreated++;owned++;e.light=true;}
  if(!cfg.continuous)events.push(e);
@@ -82,7 +83,7 @@ for(const op of ['GdipFillRectangle','GdipDrawImageRectRect','GdipGraphicsClear'
   }
  }
  const insideLibrary=paintedArea&&paintedArea[0]>=S&&paintedArea[1]>=T&&paintedArea[2]<=W&&paintedArea[3]<=H&&paintedArea[2]>paintedArea[0]&&paintedArea[3]>paintedArea[1];
- const dynamicSurface=insideLibrary&&['ffffffff','fff7f7f9','fff1f1f1'].includes(e.argb);
+ const dynamicSurface=insideLibrary&&['ffffffff','fff7f7f9','fff1f1f1','ffd9d9d9','ffd8d8d8'].includes(e.argb);
  if(insideLibrary&&['ffd9d9d9','ffd8d8d8','ff2687fb'].includes(e.argb)&&paintedArea[3]-paintedArea[1]>3){
   if(regions.length>=256)regions.shift();
   regions.push([...paintedArea,false]);
@@ -101,13 +102,13 @@ for(const op of ['GdipFillRectangle','GdipDrawImageRectRect','GdipGraphicsClear'
  if(list)listRight=corners[2];
  const artistRow=corners[0]===S&&corners[2]===listRight&&corners[1]===T&&e.rect?.[0]===0&&e.rect[1]===0&&e.rect[3]===63&&['0','ffffffff','fff0f0f0'].includes(e.argb);
  const vertical=e.argb==='ffd8d8d8'&&e.rect?.[2]===1&&corners[1]===T&&corners[3]===H;
- const horizontal=e.argb==='ffe5e5e5'&&e.rect?.[3]===1&&(fillThread===this.threadId||albumThread===this.threadId)&&corners[1]>=T&&corners[3]<=H;
+ const horizontal=e.argb==='ffe5e5e5'&&e.rect?.[3]===1&&corners[0]>=S&&corners[1]>=T&&corners[3]<=H;
  const divider=vertical||horizontal;
  if(cfg.probe&&((e.argb==='ffffffff'&&(base||panel))||album||list||divider||artistRow||recentHeading||dynamicSurface)){
  const out=Memory.alloc(Process.pointerSize);if(create(0xff212121,out)!==0)throw Error('brush creation failed');
  this.brush=out.readPointer();this.artistRow=artistRow;this.list=divider||artistRow;this.album=album;this.base=base;this.area=paintedArea||corners;a[1]=this.brush;owned++;created++;e.probe=true;if(album)e.album=true;if(list)e.list=true;if(divider)e.divider=true;}
  if(!cfg.continuous)events.push(e);
  }catch(e){if(errors.length<4)errors.push(String(e));}finally{cb--;}},
- onLeave(rv){if(this.brush){if(rv.toInt32()===0){if(this.artistRow)artistRowThread=this.threadId;if(this.album){albumThread=this.threadId;fillThread=0;regions=[];}else if(this.base){fillThread=this.threadId;albumThread=0;regions=[this.area];}else if(!this.list){if(regions.length>=256)regions.shift();regions.push(this.area);}}if(!del(this.brush)){disposed++;owned--;}else errors.push('brush disposal failed');}if(this.track)active--;}}));
+ onLeave(rv){if(this.brush){if(rv.toInt32()===0){if(this.artistRow)artistRowThread=this.threadId;if(this.album){albumThread=this.threadId;fillThread=0;if(regions.length>=256)regions.shift();regions.push(this.area);}else if(this.base){fillThread=this.threadId;albumThread=0;regions=regions.filter(r=>r[2]<=this.area[0]);regions.push(this.area);}else if(!this.list){if(regions.length>=256)regions.shift();regions.push(this.area);}}if(!del(this.brush)){disposed++;owned--;}else errors.push('brush disposal failed');}if(this.track)active--;}}));
 }
 rpc.exports={health(){return {errors:errors.length,owned,created,disposed};},mark(){artistRowThread=0;events=[];errors=[];fillThread=0;albumThread=0;regions=[];armed=true;},report(){armed=false;return {events,errors};},beginstop(){stopping=true;armed=false;},remove(){if(stopping&&!active&&!cb&&!owned&&!removed){hooks.forEach(h=>h.detach());Interceptor.flush();removed=true;}return {removed,active,callbacks:cb,created,disposed,owned,lightCreated,lightReleased};}};
