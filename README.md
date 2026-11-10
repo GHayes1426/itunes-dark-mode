@@ -64,6 +64,8 @@ The latest laptop checks covered a resized Artists column, Genres, Recently Adde
 
 Search and Up Next now theme their popup frame and text. The focused Search field also uses a dark native edit background with light text. The theme observes that control's color request; it does not replace its window procedure or intercept mouse clicks.
 
+The smaller missing-artwork tile in expanded albums is also darkened using its complete bitmap fingerprint, preserving real cover images. Its dark appearance, visible note glyph and exact restoration were verified in the disposable library.
+
 Expanded-album separators follow their current drawing position, including partial repaints. Artist-list and album-panel redraws preserve the other dark regions, and partially transparent album labels remain readable. Inactive selected track rows use a dark background, including the rounded CoreGraphics path painted when focus moves to Search. Caption buttons clear their backing before drawing hover frames so translucent highlights do not accumulate.
 
 The November 9–10 laptop checks on **12.13.12.3 at 125% scaling** covered focused Search, populated Up Next, three distinct artist names, expanded albums, selected labels, playback hover, caption hover, one-click minimize/maximize, two On/Off cycles, and hiding/reopening/quitting the switch. The native Search brush was released and all instrumentation detached. The reported two-click behavior was not reproduced on the laptop and still needs confirmation on the main PC. These checks do not establish coverage for every popup state or display scale.

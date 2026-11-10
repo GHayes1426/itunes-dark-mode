@@ -7,7 +7,7 @@ const create=fn('GdipCreateImageAttributes',['pointer']),clone=fn('GdipCloneImag
 const matrix=fn('GdipSetImageAttributesColorMatrix',['pointer','int','int','pointer','pointer','int']);
 const clip=fn('GdipGetClipBounds',['pointer','pointer']),points=fn('GdipTransformPoints',['pointer','int','int','pointer','int']);
 // Exact full pixel hashes, not brightness or a few sample colors.
-const known={64:'7c0f013bf6849160256cd40fd8d37288b14e71d1527869cc8df5ca5dd1c0fd26',265:'7856e80134608726fbe07d3677acd808d68a6f06fe08f190c1985cad53748299'};
+const known={103:'d41f35cf5ea81dfbb5d5918e43dca1b113a3412ea83c417304d077db4441493b',64:'7c0f013bf6849160256cd40fd8d37288b14e71d1527869cc8df5ca5dd1c0fd26',265:'7856e80134608726fbe07d3677acd808d68a6f06fe08f190c1985cad53748299'};
 const cm=Memory.alloc(100);for(let i=0;i<25;i++)cm.add(i*4).writeFloat(0);
 for(const i of [0,6,12])cm.add(i*4).writeFloat(-5);
 for(const i of [20,21,22])cm.add(i*4).writeFloat(4.8);
@@ -23,8 +23,8 @@ function fingerprint(img,w){
 }
 function guardTest(){
  const make=fn('GdipCreateBitmapFromScan0',['int','int','int','int','pointer','pointer']),drop=fn('GdipDisposeImage',['pointer']);
- for(const value of [0xffebebeb,0xff3486b2]){
-  const w=265,scan=Memory.alloc(w*w*4),out=Memory.alloc(8);
+ for(const w of Object.keys(known).map(Number))for(const value of [0xffebebeb,0xff3486b2]){
+  const scan=Memory.alloc(w*w*4),out=Memory.alloc(8);
   const bytes=new Uint32Array(w*w);bytes.fill(value);scan.writeByteArray(bytes.buffer);
   if(make(w,w,w*4,0x26200a,scan,out)!==0)throw Error('Guard fixture creation');
   const img=out.readPointer();try{if(fingerprint(img,w)===known[w])throw Error('Non-placeholder accepted');}
